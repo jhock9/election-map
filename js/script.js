@@ -1,5 +1,3 @@
-const winner = "";
-
 const createCandidate = function (name, color) {
   const candidate  = {
     name: name,
@@ -18,6 +16,8 @@ const createCandidate = function (name, color) {
   return candidate;
 };
 
+let winner = "";
+
 // declaring the candidates
 const blueCandidate = createCandidate("Ronald McDonald", [51, 102, 255]);
 const redCandidate = createCandidate("Bozo the Clown", [178,34,34]);
@@ -34,6 +34,9 @@ redCandidate.electionResults.splice(4,1,17);
 blueCandidate.electionResults.splice(43,1,27);
 redCandidate.electionResults.splice(43,1,11);
 
+blueCandidate.totalVotes();
+redCandidate.totalVotes();
+
 // getting state vote count using map.js code
 const setStateResults = function (state) {
   theStates[state].winner = null;
@@ -41,11 +44,11 @@ const setStateResults = function (state) {
   if (blueCandidate.electionResults[state] > redCandidate.electionResults[state]) {
     theStates[state].winner = blueCandidate;
     console.log(`${blueCandidate.name} has won the state of ${theStates[state].nameFull} with a total of ${blueCandidate.electionResults[state]} votes!`)
-  } else if (blueCandidate.totalVotes < redCandidate.totalVotes) {
+  } else if (blueCandidate.electionResults[state] < redCandidate.electionResults[state]) {
     theStates[state].winner = redCandidate;
     console.log(`${redCandidate.name} has won the state of ${theStates[state].nameFull} with a total of ${redCandidate.electionResults[state]} votes!`)
   } else {
-    console.log(`Both candidates received ${blueCandidate.totalVotes} votes! Time for a recount!`)
+    console.log(`Both candidates received ${blueCandidate.electionResults[state]} votes! Time for a recount!`)
   };
 
   const stateWinner = theStates[state].winner;
@@ -57,16 +60,36 @@ const setStateResults = function (state) {
   };
 };
 
-blueCandidate.totalVotes();
-redCandidate.totalVotes();
+const table = document.getElementById("countryResults");
+table.children[0].children[0].children[0].innerText = redCandidate.name;
+table.children[0].children[0].children[1].innerText = redCandidate.totalVotes;
+table.children[0].children[0].children[2].innerText = blueCandidate.name;
+table.children[0].children[0].children[3].innerText = blueCandidate.totalVotes;
+table.children[0].children[0].children[5].innerText = winner;
+
+/* testing code with new syntax
+let countryResultsName1 = document.querySelector(".country-results .name-1");
+let countryResultsVotes1 = document.querySelector(".country-results .results-1");
+let countryResultsName2 = document.querySelector(".country-results .name-2");
+let countryResultsVotes2 = document.querySelector(".country-results .results-2");
+let countryResultsWinner = document.querySelector(".country-results .winner");
+
+countryResultsName1 = redCandidate.name;
+countryResultsVotes1 = redCandidate.totalVotes;
+countryResultsName2 = blueCandidate.name;
+countryResultsVotes2 = blueCandidate.totalVotes;
+countryResultsWinner = winner;
+*/
+
+
 
 //announcing results
 const electionResults = function () {
   if (blueCandidate.totalVotes > redCandidate.totalVotes) {
-    const winner = blueCandidate.name;
+    let winner = blueCandidate.name;
     console.log(`${blueCandidate.name} has won the election with a total of ${blueCandidate.totalVotes} votes!`)
   } else if (blueCandidate.totalVotes < redCandidate.totalVotes) {
-    const winner = redCandidate.name;
+    let winner = redCandidate.name;
     console.log(`${redCandidate.name} has won the election with a total of ${redCandidate.totalVotes} votes!`)
   } else {
     console.log(`Both candidates received ${blueCandidate.totalVotes} votes! Time for a recount!`)
