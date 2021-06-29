@@ -121,7 +121,7 @@ redCandidate.totalVotes = function () {
   };
 // };
 
-electionResults();
+// electionResults();
 
 // adding country votes to header table
 const countryInfoTable = document.getElementById("countryResults");
