@@ -17,7 +17,7 @@ const createCandidate = function (name, color) {
   return candidate;
 };
 
-// let winner = "";
+let winner = "";
 
 // declaring the candidates
 const blueCandidate = createCandidate("Ronald McDonald", [51, 102, 255]);
@@ -56,72 +56,47 @@ const setStateResults = function (state) {
   } else {
     theStates[state].rgbColor = [153, 0, 255];
   };
+
+  // adding state votes to dynamic state table
+  const stateInfoTable = document.getElementById("stateResults");
+  const stateHeader = stateInfoTable.children[0];
+  const stateBody = stateInfoTable.children[1];
+  const stateName = stateHeader.children[0].children[0];
+  const stateAbbrev = stateHeader.children[0].children[1];
+  const candidate1Name = stateBody.children[0].children[0];
+  const candidate1Results = stateBody.children[0].children[1];
+  const candidate2Name = stateBody.children[1].children[0];
+  const candidate2Results = stateBody.children[1].children[1];
+  const winnerName = stateBody.children[2].children[1];
+
+  stateName.innerText = theStates[state].nameFull;
+  stateAbbrev.innerText = theStates[state].nameAbbrev;
+  candidate1Name.innerText = redCandidate.name;
+  candidate1Results.innerText = redCandidate.electionResults[state];
+  candidate2Name.innerText = blueCandidate.name;
+  candidate2Results.innerText = blueCandidate.electionResults[state];
+
+  if (stateWinner === null) {
+    winnerName.innerText = "TIE";
+  } else {
+    winnerName.innerText = stateWinner.name;
+  };
 };
 
-// adding state votes to dynamic state table
-const stateInfoTable = document.getElementById("stateResults");
-const stateHeader = stateInfoTable.children[0];
-const stateBody = stateInfoTable.children[1];
-const stateName = stateHeader.children[0].children[0];
-const stateAbbrev = stateHeader.children[0].children[1];
-const candidate1Name = stateBody.children[0].children[0];
-const candidate1Results = stateBody.children[0].children[1];
-const candidate2Name = stateBody.children[1].children[0];
-const candidate2Results = stateBody.children[1].children[1];
-const winnerName = stateBody.children[2].children[1];
-
-stateName.innerText = theStates[state].nameFull;
-stateAbbrev.innerText = theStates[state].nameAbbrev;
-candidate1Name.innerText = redCandidate.name;
-candidate1Results.innerText = redeCandidate.electionResults[state];
-candidate2Name.innerText = blueCandidate.name;
-candidate2Results.innerText = blueCandidate.electionResults[state];
-
-if (stateWinner !== null) {
-  winnerName.innerText = "TIE";
-} else {
-  winnerName.innerText = stateWinner.name;
-};
-
-/*
-// adding up state's results by candidate
-blueCandidate.totalVotes = function () {
-  this.totalVotes = 0;
-  
-  for (let i = 0; i < this.electionResults.length; i++) {
-    this.totalVotes = this.totalVotes + this.electionResults[i];
-    // console.log(this.totalVotes);
-  };
-}
-
-redCandidate.totalVotes = function () {
-  this.totalVotes = 0;
-  
-  for (let i = 0; i < this.electionResults.length; i++) {
-    this.totalVotes = this.totalVotes + this.electionResults[i];
-    // console.log(this.totalVotes);
-  };
-}
-*/
-
-// blueCandidate.totalVotes();
-// redCandidate.totalVotes();
+blueCandidate.totalVotes();
+redCandidate.totalVotes();
 
 //announcing results
-// const electionResults = function () {
-  if (blueCandidate.totalVotes > redCandidate.totalVotes) {
-    let winner = blueCandidate.name;
-    // console.log(`${blueCandidate.name} has won the election with a total of ${blueCandidate.totalVotes} votes!`)
-  } else if (blueCandidate.totalVotes < redCandidate.totalVotes) {
-    let winner = redCandidate.name;
-    // console.log(`${redCandidate.name} has won the election with a total of ${redCandidate.totalVotes} votes!`)
-  } else {
-    let winner = "It's a tie!";
-    // console.log(`Both candidates received ${blueCandidate.totalVotes} votes! Time for a recount!`)
-  };
-// };
-
-// electionResults();
+if (blueCandidate.totalVotes > redCandidate.totalVotes) {
+  winner = blueCandidate.name;
+  // console.log(`${blueCandidate.name} has won the election with a total of ${blueCandidate.totalVotes} votes!`)
+} else if (blueCandidate.totalVotes < redCandidate.totalVotes) {
+  winner = redCandidate.name;
+  // console.log(`${redCandidate.name} has won the election with a total of ${redCandidate.totalVotes} votes!`)
+} else {
+  winner = "It's a tie!";
+  // console.log(`Both candidates received ${blueCandidate.totalVotes} votes! Time for a recount!`)
+};
 
 // adding country votes to header table
 const countryInfoTable = document.getElementById("countryResults");
